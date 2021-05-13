@@ -183,7 +183,7 @@ async function main() {
     ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
       SET,
       [this.weth.address, this.usdc.address, this.dai.address],
-      [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
+      [parseUnits('0', 18), parseUnits('10', 6), parseUnits('0', 18)],
       [parseUnits('4000', 18), parseUnits('1', 18), parseUnits('1', 18)],
     );
 
@@ -192,14 +192,15 @@ async function main() {
   //   .c(this.gov)
   //   .setWeights(
   //     [this.usdc.address, this.dai.address, this.weth.address, this.wbtc.address, this.sl.address],
-  //     [
-  //       parseEther('0.15'),
-  //       parseEther('0.16'),
-  //       parseEther('0.24'),
-  //       parseEther('0.25'),
-  //       parseEther('0.20'),
-  //     ],
+  //     [parseEther('0.33'), parseEther('0.67'), parseEther('0'), parseEther('0'), parseEther('0')],
   //   );
+  await this.lockUSDC.approve(this.sl.address, constants.MaxUint256);
+  await this.sl.stake(parseUnits('100', 6), this.alice.address, this.usdc.address);
+  await this.sl.activateCooldown(parseEther('1'), this.usdc.address);
+  for (i = 0; i < 10; i++) {
+    await network.provider.send('evm_mine', []);
+  }
+  await this.sl.unstake(0, this.alice.address, this.usdc.address);
 
   const b = await blockNumber(
     this.sl.stake(parseUnits('100', 6), this.alice.address, this.usdc.address),
