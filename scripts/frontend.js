@@ -157,7 +157,7 @@ async function main() {
       SET,
       [this.usdc.address],
       [parseUnits('1', 6)],
-      [parseUnits('1', 18)],
+      [parseUnits('1', 18+12)],
     );
   //  setting premium
   await this.sl
@@ -166,7 +166,7 @@ async function main() {
       BADGER,
       [this.wbtc.address, this.badger.address],
       [parseUnits('0.', 8), parseUnits('0', 18)],
-      [parseUnits('50000', 18), parseUnits('35', 18)],
+      [parseUnits('50000', 18+10), parseUnits('35', 18)],
     );
 
   await this.sl
@@ -183,8 +183,8 @@ async function main() {
     ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
       SET,
       [this.weth.address, this.usdc.address, this.dai.address],
-      [parseUnits('0', 18), parseUnits('10', 6), parseUnits('0', 18)],
-      [parseUnits('4000', 18), parseUnits('1', 18), parseUnits('1', 18)],
+      [parseUnits('0', 18), parseUnits('100', 6), parseUnits('100', 18)],
+      [parseUnits('4000', 18), parseUnits('1', 18+12), parseUnits('1', 18)],
     );
 
   await this.sl.c(this.gov).setInitialWeight(this.usdc.address);
