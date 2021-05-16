@@ -157,7 +157,7 @@ async function main() {
       SET,
       [this.usdc.address],
       [parseUnits('1', 6)],
-      [parseUnits('1', 18+12)],
+      [parseUnits('1', 18 + 12)],
     );
   //  setting premium
   await this.sl
@@ -166,7 +166,7 @@ async function main() {
       BADGER,
       [this.wbtc.address, this.badger.address],
       [parseUnits('0.', 8), parseUnits('0', 18)],
-      [parseUnits('50000', 18+10), parseUnits('35', 18)],
+      [parseUnits('50000', 18 + 10), parseUnits('35', 18)],
     );
 
   await this.sl
@@ -183,27 +183,27 @@ async function main() {
     ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
       SET,
       [this.weth.address, this.usdc.address, this.dai.address],
-      [parseUnits('0', 18), parseUnits('100', 6), parseUnits('100', 18)],
-      [parseUnits('4000', 18), parseUnits('1', 18+12), parseUnits('1', 18)],
+      [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
+      [parseUnits('4000', 18), parseUnits('1', 18 + 12), parseUnits('1', 18)],
     );
 
   await this.sl.c(this.gov).setInitialWeight(this.usdc.address);
-  // await this.sl
-  //   .c(this.gov)
-  //   .setWeights(
-  //     [this.usdc.address, this.dai.address, this.weth.address, this.wbtc.address, this.sl.address],
-  //     [parseEther('0.33'), parseEther('0.67'), parseEther('0'), parseEther('0'), parseEther('0')],
-  //   );
-  await this.lockUSDC.approve(this.sl.address, constants.MaxUint256);
-  await this.sl.stake(parseUnits('100', 6), this.alice.address, this.usdc.address);
-  await this.sl.activateCooldown(parseEther('1'), this.usdc.address);
-  for (i = 0; i < 10; i++) {
-    await network.provider.send('evm_mine', []);
-  }
-  await this.sl.unstake(0, this.alice.address, this.usdc.address);
+  await this.sl
+    .c(this.gov)
+    .setWeights(
+      [this.usdc.address, this.dai.address, this.weth.address, this.wbtc.address, this.sl.address],
+      [parseEther('1'), parseEther('0'), parseEther('0'), parseEther('0'), parseEther('0')],
+    );
+  // await this.lockUSDC.approve(this.sl.address, constants.MaxUint256);
+  // await this.sl.stake(parseUnits('10000', 6), this.alice.address, this.usdc.address);
+  // await this.sl.activateCooldown(parseEther('1'), this.usdc.address);
+  // for (i = 0; i < 10; i++) {
+  //   await network.provider.send('evm_mine', []);
+  // }
+  //await this.sl.unstake(0, this.alice.address, this.usdc.address);
 
   const b = await blockNumber(
-    this.sl.stake(parseUnits('100', 6), this.alice.address, this.usdc.address),
+    this.sl.stake(parseUnits('1', 6), this.alice.address, this.usdc.address),
   );
   const x = await ethers.provider.getBlock(parseInt(b.toString()));
   console.log('Second times 1000 difference:', x.timestamp * 1000 - +new Date());
