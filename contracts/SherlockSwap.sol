@@ -57,7 +57,7 @@ contract SherlockSwap is ISherlockSwap {
     if (stakeFeeAmount > 0) {
       lockSherX.safeTransferFrom(msg.sender, address(this), stakeFeeAmount);
       lockSherX.approve(address(sherlock), stakeFeeAmount);
-      SherXID = sherlock.activateCooldown(stakeFeeAmount, address(sherlock));
+      SherXID = sherlock.activateCooldown(stakeFeeAmount, sherlock);
     }
 
     index = withdrawals.length;
@@ -78,7 +78,7 @@ contract SherlockSwap is ISherlockSwap {
 
     uint256 SherXAmount = 0;
     if (w.SherXID != uint256(-1)) {
-      SherXAmount = sherlock.unstake(w.SherXID, address(this), address(sherlock));
+      SherXAmount = sherlock.unstake(w.SherXID, address(this), sherlock);
     }
     if (SherXAmount > 0) {
       IERC20(address(sherlock)).approve(address(router), SherXAmount);
