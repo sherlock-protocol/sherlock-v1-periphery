@@ -16,7 +16,9 @@ import '@sherlock/v1-core/contracts/facets/Gov.sol';
 import '@sherlock/v1-core/contracts/facets/GovDev.sol';
 import '@sherlock/v1-core/contracts/facets/Manager.sol';
 import '@sherlock/v1-core/contracts/facets/Payout.sol';
-import '@sherlock/v1-core/contracts/facets/Pool.sol';
+import '@sherlock/v1-core/contracts/facets/PoolBase.sol';
+import '@sherlock/v1-core/contracts/facets/PoolOpen.sol';
+import '@sherlock/v1-core/contracts/facets/PoolDevOnly.sol';
 import '@sherlock/v1-core/contracts/facets/SherX.sol';
 import '@sherlock/v1-core/contracts/facets/SherXERC20.sol';
 
@@ -30,7 +32,9 @@ contract ImportsPeriphery {
   GovDev public govDev;
   Manager public manager;
   Payout public payout;
-  Pool public pool;
+  PoolBase public poolBase;
+  PoolOpen public poolOpen;
+  PoolDevOnly public poolDevOnly;
   SherX public sherX;
   SherXERC20 public sherXERC20;
 }
