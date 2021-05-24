@@ -67,40 +67,40 @@ async function main() {
   // adding staker tokens
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.usdc.address, this.lockUSDC.address, this.gov.address, true);
+    .tokenInit(this.usdc.address, this.gov.address, this.lockUSDC.address, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.dai.address, this.lockDAI.address, this.gov.address, true);
+    .tokenInit(this.dai.address, this.gov.address, this.lockDAI.address, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.weth.address, this.lockWETH.address, this.gov.address, true);
+    .tokenInit(this.weth.address, this.gov.address, this.lockWETH.address, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.wbtc.address, this.lockWBTC.address, this.gov.address, true);
+    .tokenInit(this.wbtc.address, this.gov.address, this.lockWBTC.address, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.sl.address, this.lockSHERX.address, this.gov.address, true);
+    .tokenInit(this.sl.address, this.gov.address, this.lockSHERX.address, false);
 
   // adding protocol tokens
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.badger.address, this.lockBADGER.address, this.gov.address, false);
+    .tokenInit(this.badger.address, this.gov.address, constants.AddressZero, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.alcx.address, this.lockALCX.address, this.gov.address, false);
+    .tokenInit(this.alcx.address, this.gov.address, constants.AddressZero, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.aave.address, this.lockAAVE.address, this.gov.address, false);
+    .tokenInit(this.aave.address, this.gov.address, constants.AddressZero, true);
 
   await this.sl
     .c(this.gov)
-    .tokenAdd(this.sushi.address, this.lockSUSHI.address, this.gov.address, false);
+    .tokenInit(this.sushi.address, this.gov.address, constants.AddressZero, true);
 
   // setting unstake variables
   await this.sl.c(this.gov).setCooldown(10);
@@ -186,13 +186,14 @@ async function main() {
       [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
       [parseUnits('4000', 18), parseUnits('1', 18 + 12), parseUnits('1', 18)],
     );
-
-  await this.sl.c(this.gov).setInitialWeight(this.usdc.address);
+  await this.sl.c(this.gov).setWatsonsAddress(this.alice.address);
+  await this.sl.c(this.gov).setInitialWeight();
   await this.sl
     .c(this.gov)
     .setWeights(
       [this.usdc.address, this.dai.address, this.weth.address, this.wbtc.address, this.sl.address],
       [parseEther('1'), parseEther('0'), parseEther('0'), parseEther('0'), parseEther('0')],
+      0,
     );
   // await this.lockUSDC.approve(this.sl.address, constants.MaxUint256);
   // await this.sl.stake(parseUnits('10000', 6), this.alice.address, this.usdc.address);
