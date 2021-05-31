@@ -1704,7 +1704,7 @@
 
 "@sherlock/v1-core@git+ssh://git@github.com:sherlock-protocol/sherlock-v1-core.git":
   version "0.0.1"
-  resolved "git+ssh://git@github.com:sherlock-protocol/sherlock-v1-core.git#e00404499e08d2f28eaafd50da53ba8aabe1f50d"
+  resolved "git+ssh://git@github.com:sherlock-protocol/sherlock-v1-core.git#361693996f1cbcffe17a2b985ce29a057c070c56"
   dependencies:
     "@nomiclabs/hardhat-etherscan" "^2.1.1"
     "@openzeppelin/contracts" "^3.2.1-solc-0.7"
