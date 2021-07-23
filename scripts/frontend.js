@@ -25,43 +25,23 @@ async function main() {
     ['sushi', this.ERC20Mock, ['SushiToken', 'SUSHI', parseUnits(tenBilly, 18)]],
   ]);
   await deploy(this, [
-    [
-      'lockUSDC',
-      this.ForeignLock,
-      ['Sherlocked USDC', 'lockUSDC', this.sl.address, this.usdc.address],
-    ],
-    ['lockDAI', this.ForeignLock, ['Sherlocked DAI', 'lockDAI', this.sl.address, this.dai.address]],
-    [
-      'lockWETH',
-      this.ForeignLock,
-      ['Sherlocked WETH', 'lockWETH', this.sl.address, this.weth.address],
-    ],
-    [
-      'lockWBTC',
-      this.ForeignLock,
-      ['Sherlocked WTBC', 'lockWBTC', this.sl.address, this.wbtc.address],
-    ],
+    ['lockUSDC', this.ForeignLock, ['Locked USDC', 'lockUSDC', this.sl.address, this.usdc.address]],
+    ['lockDAI', this.ForeignLock, ['Locked DAI', 'lockDAI', this.sl.address, this.dai.address]],
+    ['lockWETH', this.ForeignLock, ['Locked WETH', 'lockWETH', this.sl.address, this.weth.address]],
+    ['lockWBTC', this.ForeignLock, ['Locked WTBC', 'lockWBTC', this.sl.address, this.wbtc.address]],
     [
       'lockBADGER',
       this.ForeignLock,
-      ['Sherlocked BADGER', 'lockBADGER', this.sl.address, this.badger.address],
+      ['Locked BADGER', 'lockBADGER', this.sl.address, this.badger.address],
     ],
-    [
-      'lockALCX',
-      this.ForeignLock,
-      ['Sherlocked ALCX', 'lockALCX', this.sl.address, this.alcx.address],
-    ],
-    [
-      'lockAAVE',
-      this.ForeignLock,
-      ['Sherlocked AAVE', 'lockAAVE', this.sl.address, this.aave.address],
-    ],
+    ['lockALCX', this.ForeignLock, ['Locked ALCX', 'lockALCX', this.sl.address, this.alcx.address]],
+    ['lockAAVE', this.ForeignLock, ['Locked AAVE', 'lockAAVE', this.sl.address, this.aave.address]],
     [
       'lockSUSHI',
       this.ForeignLock,
-      ['Sherlocked SUSHI', 'lockSUSHI', this.sl.address, this.sushi.address],
+      ['Locked SUSHI', 'lockSUSHI', this.sl.address, this.sushi.address],
     ],
-    ['lockSHERX', this.NativeLock, ['Sherlocked SHERX', 'lockSHERX', this.sl.address]],
+    ['lockSHERX', this.NativeLock, ['Locked SHERX', 'lockSHERX', this.sl.address]],
   ]);
 
   // adding staker tokens
@@ -102,6 +82,15 @@ async function main() {
     .c(this.gov)
     .tokenInit(this.sushi.address, this.gov.address, constants.AddressZero, true);
 
+  await this.sl
+    .c(this.gov)
+    .tokenInit(
+      '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+      this.gov.address,
+      constants.AddressZero,
+      true,
+    );
+
   // setting unstake variables
   await this.sl.c(this.gov).setCooldown(10);
   await this.sl.c(this.gov).setUnstakeWindow(5);
@@ -112,22 +101,23 @@ async function main() {
     .protocolAdd(BADGER, this.gov.address, this.gov.address, [
       this.wbtc.address,
       this.badger.address,
+      '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     ]);
 
-  await this.sl
-    .c(this.gov)
-    .protocolAdd(ALCHEMIX, this.gov.address, this.gov.address, [
-      this.alcx.address,
-      this.weth.address,
-    ]);
+  // await this.sl
+  //   .c(this.gov)
+  //   .protocolAdd(ALCHEMIX, this.gov.address, this.gov.address, [
+  //     this.alcx.address,
+  //     this.weth.address,
+  //   ]);
 
-  await this.sl
-    .c(this.gov)
-    .protocolAdd(SET, this.gov.address, this.gov.address, [
-      this.weth.address,
-      this.usdc.address,
-      this.dai.address,
-    ]);
+  // await this.sl
+  //   .c(this.gov)
+  //   .protocolAdd(SET, this.gov.address, this.gov.address, [
+  //     this.weth.address,
+  //     this.usdc.address,
+  //     this.dai.address,
+  //   ]);
 
   // approvals
   await this.dai.approve(this.sl.address, constants.MaxUint256);
@@ -140,67 +130,69 @@ async function main() {
   // depositing balances
   await this.sl.depositProtocolBalance(BADGER, parseUnits('1000', 8), this.wbtc.address);
   await this.sl.depositProtocolBalance(BADGER, parseUnits('1000', 18), this.badger.address);
-  await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.alcx.address);
-  await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.weth.address);
-  await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.weth.address);
-  await this.sl.depositProtocolBalance(SET, parseUnits('1000', 6), this.usdc.address);
-  await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.dai.address);
+  // await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.alcx.address);
+  // await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.weth.address);
+  // await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.weth.address);
+  // await this.sl.depositProtocolBalance(SET, parseUnits('1000', 6), this.usdc.address);
+  // await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.dai.address);
 
   // revoke some approvals
   await this.dai.approve(this.sl.address, 0);
   await this.wbtc.approve(this.sl.address, 0);
 
-  // setting initial fee token price
-  await this.sl
-    .c(this.gov)
-    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-      SET,
-      [this.usdc.address],
-      [parseUnits('1', 6)],
-      [parseUnits('1', 18 + 12)],
-    );
+  // // setting initial fee token price
+  // await this.sl
+  //   .c(this.gov)
+  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+  //     SET,
+  //     [this.usdc.address],
+  //     [parseUnits('1', 6)],
+  //     [parseUnits('1', 18 + 12)],
+  //   );
   //  setting premium
-  await this.sl
-    .c(this.gov)
-    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-      BADGER,
-      [this.wbtc.address, this.badger.address],
-      [parseUnits('0.', 8), parseUnits('0', 18)],
-      [parseUnits('50000', 18 + 10), parseUnits('35', 18)],
-    );
+  // await this.sl
+  //   .c(this.gov)
+  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+  //     BADGER,
+  //     [this.wbtc.address, this.badger.address],
+  //     [parseUnits('0.', 8), parseUnits('0', 18)],
+  //     [parseUnits('50000', 18 + 10), parseUnits('35', 18)],
+  //   );
 
-  await this.sl
-    .c(this.gov)
-    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-      ALCHEMIX,
-      [this.alcx.address, this.weth.address],
-      [parseUnits('0', 18), parseUnits('0', 18)],
-      [parseUnits('1600', 18), parseUnits('4000', 18)],
-    );
+  // await this.sl
+  //   .c(this.gov)
+  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+  //     ALCHEMIX,
+  //     [this.alcx.address, this.weth.address],
+  //     [parseUnits('0', 18), parseUnits('0', 18)],
+  //     [parseUnits('1600', 18), parseUnits('4000', 18)],
+  //   );
 
-  await this.sl
-    .c(this.gov)
-    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-      SET,
-      [this.weth.address, this.usdc.address, this.dai.address],
-      [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
-      [parseUnits('4000', 18), parseUnits('1', 18 + 12), parseUnits('1', 18)],
-    );
+  // await this.sl
+  //   .c(this.gov)
+  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+  //     SET,
+  //     [this.weth.address, this.usdc.address, this.dai.address],
+  //     [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
+  //     [parseUnits('4000', 18), parseUnits('1', 18 + 12), parseUnits('1', 18)],
+  //   );
   await this.sl.c(this.gov).setWatsonsAddress(this.alice.address);
   await this.sl.c(this.gov).setInitialWeight();
   await this.sl
     .c(this.gov)
     .setWeights(
       [this.usdc.address, this.dai.address, this.weth.address, this.wbtc.address, this.sl.address],
-      [parseEther('1'), parseEther('0'), parseEther('0'), parseEther('0'), parseEther('0')],
+      [65535, parseEther('0'), parseEther('0'), parseEther('0'), 0],
       0,
     );
   // await this.lockUSDC.approve(this.sl.address, constants.MaxUint256);
+  // await this.sl.stake(parseUnits('1', 6), this.alice.address, this.usdc.address);
   // await this.sl.stake(parseUnits('10000', 6), this.alice.address, this.usdc.address);
-  // await this.sl.activateCooldown(parseEther('1'), this.usdc.address);
-  // for (i = 0; i < 10; i++) {
-  //   await network.provider.send('evm_mine', []);
+
+  // for (i = 1; i < 20; i++) {
+  //   await this.sl.activateCooldown(parseEther(String(i)), this.usdc.address);
   // }
+
   //await this.sl.unstake(0, this.alice.address, this.usdc.address);
 
   const b = await blockNumber(

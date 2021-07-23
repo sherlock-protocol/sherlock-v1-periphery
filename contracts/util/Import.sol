@@ -21,6 +21,7 @@ import '@sherlock/v1-core/contracts/facets/PoolOpen.sol';
 import '@sherlock/v1-core/contracts/facets/PoolDevOnly.sol';
 import '@sherlock/v1-core/contracts/facets/SherX.sol';
 import '@sherlock/v1-core/contracts/facets/SherXERC20.sol';
+import '@sherlock/v1-core/contracts/facets/PoolStrategy.sol';
 
 // Get the compiler to pick up these facets
 contract ImportsPeriphery {
@@ -37,4 +38,5 @@ contract ImportsPeriphery {
   PoolDevOnly public poolDevOnly;
   SherX public sherX;
   SherXERC20 public sherXERC20;
+  PoolStrategy public poolStrategy;
 }
