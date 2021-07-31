@@ -18,7 +18,7 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
-    "@sherlock/v1-core": "git+ssh://git@github.com:sherlock-protocol/sherlock-v1-core.git",
+    "@sherlock/v1-core": "git://github.com/sherlock-protocol/sherlock-v1-core",
     "@uniswap/v2-core": "^1.0.1",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "chai": "^4.3.4",
