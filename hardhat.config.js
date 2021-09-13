@@ -33,17 +33,17 @@ module.exports = {
     goerli: {
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY_GOERLI}`,
       gasPrice: 900000000000,
-      accounts: [PRIVATE_KEY].filter((item) => item !== ''),
+      accounts: [PRIVATE_KEY].filter(item => item !== ''),
     },
     kovan: {
       url: `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_API_KEY_KOVAN}`,
       gasPrice: 3000000000,
-      accounts: [PRIVATE_KEY].filter((item) => item !== ''),
+      accounts: [PRIVATE_KEY].filter(item => item !== ''),
     },
   },
   etherscan: {
     // Your API key for Etherscan
     // Obtain one at https://etherscan.io/
     apiKey: ETHERSCAN_API,
-  }
+  },
 };
