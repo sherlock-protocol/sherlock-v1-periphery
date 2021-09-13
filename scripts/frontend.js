@@ -44,6 +44,10 @@ async function main() {
     ['lockSHERX', this.NativeLock, ['Locked SHERX', 'lockSHERX', this.sl.address]],
   ]);
 
+  await this.sl.c(this.gov).setMaxTokensSherX(12);
+  await this.sl.c(this.gov).setMaxTokensStaker(12);
+  await this.sl.c(this.gov).setMaxProtocolPool(12);
+
   // adding staker tokens
   await this.sl
     .c(this.gov)
@@ -82,14 +86,9 @@ async function main() {
     .c(this.gov)
     .tokenInit(this.sushi.address, this.gov.address, constants.AddressZero, true);
 
-  await this.sl
-    .c(this.gov)
-    .tokenInit(
-      '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
-      this.gov.address,
-      constants.AddressZero,
-      true,
-    );
+  // await this.sl
+  //   .c(this.gov)
+  //   .tokenInit(this.wbtc.address, this.gov.address, constants.AddressZero, true);
 
   // setting unstake variables
   await this.sl.c(this.gov).setCooldown(10);
@@ -99,9 +98,8 @@ async function main() {
   await this.sl
     .c(this.gov)
     .protocolAdd(BADGER, this.gov.address, this.gov.address, [
-      this.wbtc.address,
       this.badger.address,
-      '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+      this.wbtc.address,
     ]);
 
   // await this.sl
@@ -223,7 +221,7 @@ async function main() {
 
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
+  .catch(error => {
     console.error(error);
     process.exit(1);
   });
