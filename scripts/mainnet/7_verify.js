@@ -1,0 +1,1 @@
+// verify all deployed contracts

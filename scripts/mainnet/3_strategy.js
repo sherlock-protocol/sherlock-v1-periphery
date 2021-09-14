@@ -8,9 +8,15 @@ const { utils } = require('ethers/lib');
 
 const { deploy } = require('@sherlock/v1-core/test/utilities');
 
-const MULTISIG = '0x666B8EbFbF4D5f0CE56962a25635CfF563F13161';
-const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-const aUSDC = '0xbcca60bb61934080951369a648fb03df4f96263c';
+let MULTISIG = '0x666B8EbFbF4D5f0CE56962a25635CfF563F13161';
+let USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
+let aUSDC = '0xbcca60bb61934080951369a648fb03df4f96263c';
+
+if (network.name == 'kovan') {
+  MULTISIG = '0x4d6510201F066043b6C4Bb73f36c0252Cc2c8916';
+  USDC = '0xe22da380ee6B445bb8273C81944ADEB6E8450422';
+  aUSDC = '0xe12afec5aa12cf614678f9bfeeb98ca9bb95b5b0';
+}
 
 function sleep(seconds) {
   return new Promise(resolve => setTimeout(resolve, seconds * 1000));
