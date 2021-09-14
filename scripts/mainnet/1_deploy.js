@@ -78,6 +78,8 @@ async function main() {
     })
   ).deploy();
   await libSherX.deployed();
+  console.log('libPool', libPool.address);
+  console.log('libSherX', libSherX.address);
 
   // Prepare facets with DevOnly staking
   console.log('-- 2 --');
