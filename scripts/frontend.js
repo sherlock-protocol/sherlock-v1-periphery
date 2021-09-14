@@ -102,20 +102,20 @@ async function main() {
       this.wbtc.address,
     ]);
 
-  // await this.sl
-  //   .c(this.gov)
-  //   .protocolAdd(ALCHEMIX, this.gov.address, this.gov.address, [
-  //     this.alcx.address,
-  //     this.weth.address,
-  //   ]);
+  await this.sl
+    .c(this.gov)
+    .protocolAdd(ALCHEMIX, this.gov.address, this.gov.address, [
+      this.alcx.address,
+      this.weth.address,
+    ]);
 
-  // await this.sl
-  //   .c(this.gov)
-  //   .protocolAdd(SET, this.gov.address, this.gov.address, [
-  //     this.weth.address,
-  //     this.usdc.address,
-  //     this.dai.address,
-  //   ]);
+  await this.sl
+    .c(this.gov)
+    .protocolAdd(SET, this.gov.address, this.gov.address, [
+      this.weth.address,
+      this.usdc.address,
+      this.dai.address,
+    ]);
 
   // approvals
   await this.dai.approve(this.sl.address, constants.MaxUint256);
@@ -128,52 +128,52 @@ async function main() {
   // depositing balances
   await this.sl.depositProtocolBalance(BADGER, parseUnits('1000', 8), this.wbtc.address);
   await this.sl.depositProtocolBalance(BADGER, parseUnits('1000', 18), this.badger.address);
-  // await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.alcx.address);
-  // await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.weth.address);
-  // await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.weth.address);
-  // await this.sl.depositProtocolBalance(SET, parseUnits('1000', 6), this.usdc.address);
-  // await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.dai.address);
+  await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.alcx.address);
+  await this.sl.depositProtocolBalance(ALCHEMIX, parseUnits('1000', 18), this.weth.address);
+  await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.weth.address);
+  await this.sl.depositProtocolBalance(SET, parseUnits('1000', 6), this.usdc.address);
+  await this.sl.depositProtocolBalance(SET, parseUnits('1000', 18), this.dai.address);
 
   // revoke some approvals
   await this.dai.approve(this.sl.address, 0);
   await this.wbtc.approve(this.sl.address, 0);
 
   // // setting initial fee token price
-  // await this.sl
-  //   .c(this.gov)
-  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-  //     SET,
-  //     [this.usdc.address],
-  //     [parseUnits('1', 6)],
-  //     [parseUnits('1', 18 + 12)],
-  //   );
-  //  setting premium
-  // await this.sl
-  //   .c(this.gov)
-  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-  //     BADGER,
-  //     [this.wbtc.address, this.badger.address],
-  //     [parseUnits('0.', 8), parseUnits('0', 18)],
-  //     [parseUnits('50000', 18 + 10), parseUnits('35', 18)],
-  //   );
+  await this.sl
+    .c(this.gov)
+    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+      SET,
+      [this.usdc.address],
+      [parseUnits('1', 6)],
+      [parseUnits('1', 18 + 12)],
+    );
+  //setting premium
+  await this.sl
+    .c(this.gov)
+    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+      BADGER,
+      [this.wbtc.address, this.badger.address],
+      [parseUnits('0.', 8), parseUnits('0', 18)],
+      [parseUnits('50000', 18 + 10), parseUnits('35', 18)],
+    );
 
-  // await this.sl
-  //   .c(this.gov)
-  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-  //     ALCHEMIX,
-  //     [this.alcx.address, this.weth.address],
-  //     [parseUnits('0', 18), parseUnits('0', 18)],
-  //     [parseUnits('1600', 18), parseUnits('4000', 18)],
-  //   );
+  await this.sl
+    .c(this.gov)
+    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+      ALCHEMIX,
+      [this.alcx.address, this.weth.address],
+      [parseUnits('0', 18), parseUnits('0', 18)],
+      [parseUnits('1600', 18), parseUnits('4000', 18)],
+    );
 
-  // await this.sl
-  //   .c(this.gov)
-  //   ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
-  //     SET,
-  //     [this.weth.address, this.usdc.address, this.dai.address],
-  //     [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
-  //     [parseUnits('4000', 18), parseUnits('1', 18 + 12), parseUnits('1', 18)],
-  //   );
+  await this.sl
+    .c(this.gov)
+    ['setProtocolPremiumAndTokenPrice(bytes32,address[],uint256[],uint256[])'](
+      SET,
+      [this.weth.address, this.usdc.address, this.dai.address],
+      [parseUnits('0', 18), parseUnits('1', 6), parseUnits('0', 18)],
+      [parseUnits('4000', 18), parseUnits('1', 18 + 12), parseUnits('1', 18)],
+    );
   await this.sl.c(this.gov).setWatsonsAddress(this.alice.address);
   await this.sl.c(this.gov).setInitialWeight();
   await this.sl
