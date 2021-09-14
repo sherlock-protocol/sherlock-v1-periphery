@@ -30,6 +30,10 @@ module.exports = {
     hardhat: {
       chainId: 1337,
     },
+    local: {
+      url: 'http://127.0.0.1:8545',
+      gasPrice: 50000000000,
+    },
     goerli: {
       url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY_GOERLI}`,
       gasPrice: 900000000000,

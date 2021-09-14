@@ -1,7 +1,8 @@
 {
   "name": "hardhat-project",
   "scripts": {
-    "frontend": "npx hardhat node & P1=$! sleep 3 && npx hardhat --network localhost run scripts/frontend.js & wait $P1",
+    "frontend": "npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/{KEY} & P1=$! sleep 3 && npx hardhat --network localhost run scripts/frontend.js & wait $P1",
+    "fork:empty": "npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/{KEY}",
     "fork": "npx hardhat node --fork https://eth-mainnet.alchemyapi.io/v2/{KEY} & P1=$! sleep 3 && npx hardhat --network localhost run scripts/frontend.js & wait $P1",
     "prettier": "prettier --write contracts/*.sol contracts/**/*.sol",
     "prettier-diff": "prettier --list-different  contracts/*.sol contracts/**/*.sol"

@@ -10,12 +10,15 @@ const BADGER = id('badger.protocol');
 const ALCHEMIX = id('alchemix.protocol');
 const SET = id('set.protocol');
 
+const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
+const aUSDC = '0xbcca60bb61934080951369a648fb03df4f96263c';
+
 async function main() {
   await prepare(this, ['ERC20Mock', 'ERC20Mock6d', 'ERC20Mock8d', 'NativeLock', 'ForeignLock']);
 
   await solution(this, 'sl', this.gov);
   await deploy(this, [
-    ['usdc', this.ERC20Mock6d, ['USD Coin', 'USDC', parseUnits(tenBilly, 6)]],
+    //['usdc', this.ERC20Mock6d, ['USD Coin', 'USDC', parseUnits(tenBilly, 6)]],
     ['dai', this.ERC20Mock, ['Dai Stablecoin', 'DAI', parseUnits(tenBilly, 18)]],
     ['weth', this.ERC20Mock, ['Wrapped Ether', 'WETH', parseUnits(tenBilly, 18)]],
     ['wbtc', this.ERC20Mock8d, ['Wrapped BTC', 'WBTC', parseUnits(tenBilly, 8)]],
@@ -24,6 +27,8 @@ async function main() {
     ['aave', this.ERC20Mock, ['Aave Token', 'AAVE', parseUnits(tenBilly, 18)]],
     ['sushi', this.ERC20Mock, ['SushiToken', 'SUSHI', parseUnits(tenBilly, 18)]],
   ]);
+  this.usdc = await ethers.getContractAt('IERC20', USDC);
+
   await deploy(this, [
     ['lockUSDC', this.ForeignLock, ['Locked USDC', 'lockUSDC', this.sl.address, this.usdc.address]],
     ['lockDAI', this.ForeignLock, ['Locked DAI', 'lockDAI', this.sl.address, this.dai.address]],
@@ -43,6 +48,19 @@ async function main() {
     ],
     ['lockSHERX', this.NativeLock, ['Locked SHERX', 'lockSHERX', this.sl.address]],
   ]);
+
+  this.mintUSDC = async () => {
+    const usdcWhaleAddress = '0x6262998ced04146fa42253a5c0af90ca02dfd2a3';
+    await network.provider.request({
+      method: 'hardhat_impersonateAccount',
+      params: [usdcWhaleAddress],
+    });
+    const usdcWhale = await ethers.provider.getSigner(usdcWhaleAddress);
+    this.usdcAmount = parseUnits('50000000', 6);
+    this.usdc.connect(usdcWhale).transfer(this.gov.address, this.usdcAmount);
+    this.usdc.connect(usdcWhale).transfer(this.alice.address, this.usdcAmount);
+  };
+  await this.mintUSDC();
 
   await this.sl.c(this.gov).setMaxTokensSherX(12);
   await this.sl.c(this.gov).setMaxTokensStaker(12);
@@ -192,6 +210,15 @@ async function main() {
   // }
 
   //await this.sl.unstake(0, this.alice.address, this.usdc.address);
+
+  const aaveV2 = await (await ethers.getContractFactory('AaveV2')).deploy(
+    aUSDC,
+    this.sl.address,
+    this.gov.address,
+  );
+  await aaveV2.deployed();
+
+  await (await this.sl.c(this.gov).strategyUpdate(aaveV2.address, USDC)).wait();
 
   const b = await blockNumber(
     this.sl.stake(parseUnits('1', 6), this.alice.address, this.usdc.address),
