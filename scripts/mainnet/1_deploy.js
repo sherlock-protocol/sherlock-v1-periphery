@@ -11,7 +11,7 @@ const COOLDOWN_BLOCKS = 46523; // ~7 days of blocks
 const UNSTAKE_BLOCKS = 19938; // ~3 days of blocks
 
 if (network.name == 'kovan') {
-  MULTISIG = '0x4d6510201F066043b6C4Bb73f36c0252Cc2c8916';
+  MULTISIG = '0x34EDB6fD102578De64CaEbe82f540fB3E47a05EA';
   USDC = '0xe22da380ee6B445bb8273C81944ADEB6E8450422';
 }
 
@@ -56,6 +56,7 @@ async function main() {
   [this.gov] = await ethers.getSigners();
   this.gov.address = await this.gov.getAddress();
 
+  console.log('this.gov\t', this.gov.address);
   console.log('MULTISIG\t', MULTISIG);
   console.log('USDC\t\t', USDC);
   console.log('COOLDOWN_BLOCKS\t', COOLDOWN_BLOCKS);

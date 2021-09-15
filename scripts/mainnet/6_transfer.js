@@ -20,9 +20,9 @@ let USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 let LIBPOOL = '0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650';
 
 if (network.name == 'kovan') {
-  MULTISIG = '0x4d6510201F066043b6C4Bb73f36c0252Cc2c8916';
+  MULTISIG = '0x34EDB6fD102578De64CaEbe82f540fB3E47a05EA';
   USDC = '0xe22da380ee6B445bb8273C81944ADEB6E8450422';
-  LIBPOOL = '0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650';
+  LIBPOOL = '0xe1215b2Dc94F487818d65FD7A4F8B9558602f0E0';
 }
 
 async function getDiamondCut(facets, action = FacetCutAction.Add) {
@@ -65,7 +65,7 @@ async function main() {
     }),
   ];
   const diamondCut = await getDiamondCut(facets, (action = FacetCutAction.Replace));
-  await this.sl.c(this.gov).updateSolution(diamondCut, constants.AddressZero, '0x');
+  await (await this.sl.c(this.gov).updateSolution(diamondCut, constants.AddressZero, '0x')).wait();
 
   await (await this.sl.c(this.gov).transferGovDev(MULTISIG)).wait();
   await (await this.sl.c(this.gov).tokenInit(USDC, MULTISIG, constants.AddressZero, false)).wait();

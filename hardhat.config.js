@@ -7,6 +7,7 @@ const INFURA_API_KEY = process.env.INFURA_API_KEY || '';
 const ALCHEMY_API_KEY_GOERLI = process.env.ALCHEMY_API_KEY_GOERLI || '';
 const ALCHEMY_API_KEY_KOVAN = process.env.ALCHEMY_API_KEY_KOVAN || '';
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
+const KOVAN_PRIVATE_KEY = process.env.KOVAN_PRIVATE_KEY || '';
 
 task('env', 'Prints env', async () => {
   console.log('ETHERSCAN_API', ETHERSCAN_API);
@@ -14,6 +15,7 @@ task('env', 'Prints env', async () => {
   console.log('ALCHEMY_API_KEY_KOVAN', ALCHEMY_API_KEY_KOVAN);
   console.log('INFURA_API_KEY', INFURA_API_KEY);
   console.log('PRIVATE_KEY', PRIVATE_KEY);
+  console.log('KOVAN_PRIVATE_KEY', KOVAN_PRIVATE_KEY);
 });
 
 module.exports = {
@@ -41,8 +43,8 @@ module.exports = {
     },
     kovan: {
       url: `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_API_KEY_KOVAN}`,
-      gasPrice: 3000000000,
-      accounts: [PRIVATE_KEY].filter(item => item !== ''),
+      gasPrice: 1000000007,
+      accounts: [KOVAN_PRIVATE_KEY].filter(item => item !== ''),
     },
   },
   etherscan: {
