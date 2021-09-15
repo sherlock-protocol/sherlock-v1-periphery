@@ -6,9 +6,9 @@ const { prepare, deploy, solution, blockNumber } = require('@sherlock/v1-core/te
 
 const tenBilly = '10000000000';
 
-const BADGER = id('badger.protocol');
-const ALCHEMIX = id('alchemix.protocol');
-const SET = id('set.protocol');
+const BADGER = id('primitive.protocol');
+const ALCHEMIX = id('teller.protocol');
+const SET = id('euler.protocol');
 
 const USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 const aUSDC = '0xbcca60bb61934080951369a648fb03df4f96263c';
