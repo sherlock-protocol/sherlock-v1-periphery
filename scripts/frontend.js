@@ -221,9 +221,12 @@ async function main() {
   await (await this.sl.c(this.gov).strategyUpdate(aaveV2.address, USDC)).wait();
 
   const b = await blockNumber(
-    this.sl.stake(parseUnits('1', 6), this.alice.address, this.usdc.address),
+    this.sl.stake(parseUnits('10000000', 6), this.alice.address, this.usdc.address),
   );
   const x = await ethers.provider.getBlock(parseInt(b.toString()));
+
+  await this.sl.c(this.gov).strategyDeposit(parseUnits('5000000', 6), this.usdc.address);
+
   console.log('Second times 1000 difference:', x.timestamp * 1000 - +new Date());
 
   await network.provider.send('evm_setAutomine', [false]);
