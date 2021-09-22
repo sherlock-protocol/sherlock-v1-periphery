@@ -32,21 +32,22 @@ async function main() {
   this.gov.address = await this.gov.getAddress();
   this.usdc = await ethers.getContractAt('IERC20', USDC);
 
-  if (network.name == 'localhost') {
-    this.mintUSDC = async () => {
-      const usdcWhaleAddress = '0xbe0eb53f46cd790cd13851d5eff43d12404d33e8';
-      await network.provider.request({
-        method: 'hardhat_impersonateAccount',
-        params: [usdcWhaleAddress],
-      });
-      const usdcWhale = await ethers.provider.getSigner(usdcWhaleAddress);
-      this.usdcAmount = parseUnits('10000', 6);
-      this.usdc.connect(usdcWhale).transfer(this.gov.address, this.usdcAmount);
-    };
-    await this.mintUSDC();
-  }
+  // if (network.name == 'localhost') {
+  //   this.mintUSDC = async () => {
+  //     const usdcWhaleAddress = '0xbe0eb53f46cd790cd13851d5eff43d12404d33e8';
+  //     await network.provider.request({
+  //       method: 'hardhat_impersonateAccount',
+  //       params: [usdcWhaleAddress],
+  //     });
+  //     const usdcWhale = await ethers.provider.getSigner(usdcWhaleAddress);
+  //     this.usdcAmount = parseUnits('10000', 6);
+  //     this.usdc.connect(usdcWhale).transfer(this.gov.address, this.usdcAmount);
+  //   };
+  //   await this.mintUSDC();
+  // }
 
   console.log('SHERLOCK\t', SHERLOCK);
+  console.log('TELLER\t', TELLER);
   console.log('MULTISIG\t', MULTISIG);
   console.log('USDC\t\t', USDC);
 
@@ -57,6 +58,7 @@ async function main() {
   const amount = parseUnits('100', 6);
 
   await (await this.usdc.approve(SHERLOCK, amount.mul(2))).wait();
+
   await (await this.sl.c(this.gov).depositProtocolBalance(TELLER, amount, USDC)).wait();
 
   // Set initital premium to 1 USDC per block

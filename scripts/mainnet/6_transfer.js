@@ -17,7 +17,7 @@ const { network } = require('hardhat');
 
 let MULTISIG = '0x666B8EbFbF4D5f0CE56962a25635CfF563F13161';
 let USDC = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
-let LIBPOOL = '0x7bc06c482DEAd17c0e297aFbC32f6e63d3846650';
+let LIBPOOL = '0xeDdA10a93767b07F6913cb01479f6418Eb35aB7E';
 
 if (network.name == 'kovan') {
   MULTISIG = '0x34EDB6fD102578De64CaEbe82f540fB3E47a05EA';

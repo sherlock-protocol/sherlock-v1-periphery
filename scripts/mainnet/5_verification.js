@@ -24,10 +24,11 @@ function sleep(seconds) {
 
 async function main() {
   this.sl = await ethers.getContractAt('ISherlock', SHERLOCK);
+  this.aave = await ethers.getContractAt('AaveV2', '0xeecee260a402fe3c20e5b8301382005124bef121');
   this.sl.c = this.sl.connect;
 
-  [this.gov] = await ethers.getSigners();
-  this.gov.address = await this.gov.getAddress();
+  //[this.gov] = await ethers.getSigners();
+  //this.gov.address = await this.gov.getAddress();
 
   console.log('~ LockUSDC rates ~');
   console.log('ttl', (await this.sl.TokenToLock(parseUnits('1', 6), USDC)).toString());
@@ -64,6 +65,13 @@ async function main() {
   console.log('getMaxTokensSherX', await this.sl.getMaxTokensSherX());
   console.log('getMaxTokensStaker', await this.sl.getMaxTokensStaker());
   console.log('getMaxProtocolPool', await this.sl.getMaxProtocolPool());
+
+  console.log('~ Aave strategy ~');
+  console.log('aaveLmReceiver', await this.aave.aaveLmReceiver());
+
+
+  console.log('getUnstakeWindow', await this.sl.getUnstakeWindow());
+  console.log('getCooldown', await this.sl.getCooldown());
 }
 
 main()

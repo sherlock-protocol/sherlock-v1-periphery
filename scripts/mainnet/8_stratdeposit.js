@@ -28,7 +28,9 @@ async function main() {
   [this.gov] = await ethers.getSigners();
   this.gov.address = await this.gov.getAddress();
 
-  await (await this.sl.c(this.gov).strategyDeposit(parseUnits('2500000', 6), USDC)).wait();
+  console.log(await this.sl.c(this.gov).getLockToken(USDC));
+  console.log(await this.sl.c(this.gov).getLockToken(SHERLOCK));
+  //await (await this.sl.c(this.gov).strategyDeposit(parseUnits('2500000', 6), USDC)).wait();
 }
 
 main()
