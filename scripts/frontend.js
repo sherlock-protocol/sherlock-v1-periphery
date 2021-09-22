@@ -210,6 +210,7 @@ async function main() {
   // }
 
   //await this.sl.unstake(0, this.alice.address, this.usdc.address);
+  await this.usdc.approve(this.sl.address, 0);
 
   const aaveV2 = await (await ethers.getContractFactory('AaveV2')).deploy(
     aUSDC,
@@ -220,14 +221,14 @@ async function main() {
 
   await (await this.sl.c(this.gov).strategyUpdate(aaveV2.address, USDC)).wait();
 
-  const b = await blockNumber(
-    this.sl.stake(parseUnits('10000000', 6), this.alice.address, this.usdc.address),
-  );
-  const x = await ethers.provider.getBlock(parseInt(b.toString()));
+  // const b = await blockNumber(
+  //   this.sl.stake(parseUnits('10000000', 6), this.alice.address, this.usdc.address),
+  // );
+  // const x = await ethers.provider.getBlock(parseInt(b.toString()));
 
-  await this.sl.c(this.gov).strategyDeposit(parseUnits('5000000', 6), this.usdc.address);
+  //await this.sl.c(this.gov).strategyDeposit(parseUnits('5000000', 6), this.usdc.address);
 
-  console.log('Second times 1000 difference:', x.timestamp * 1000 - +new Date());
+  //console.log('Second times 1000 difference:', x.timestamp * 1000 - +new Date());
 
   await network.provider.send('evm_setAutomine', [false]);
   await network.provider.send('evm_setIntervalMining', [13325]);
